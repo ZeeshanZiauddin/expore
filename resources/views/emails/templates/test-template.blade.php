@@ -1,0 +1,1 @@
+<div><h1 style="color:red; font-size:40px;">{{$company_name}}</h1></div>
