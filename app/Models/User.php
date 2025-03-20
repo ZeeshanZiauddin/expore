@@ -48,10 +48,23 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+    public function canImpersonate(): bool
+    {
+        return $this->hasRole('super_admin');
+    }
+
+    public function canBeImpersonated(): bool
+    {
+        return $this->hasRole('agent');
+    }
 
     public function canComment(): bool
     {
         // your conditional logic here
         return true;
+    }
+    public function awailedQueries()
+    {
+        return $this->hasMany(Query::class, 'awailed_by');
     }
 }

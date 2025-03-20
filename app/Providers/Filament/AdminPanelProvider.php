@@ -87,7 +87,7 @@ class AdminPanelProvider extends PanelProvider
                 DispatchServingFilamentEvent::class,
 
             ])
-
+            ->sidebarCollapsibleOnDesktop()
             ->authMiddleware([
                 Authenticate::class,
             ]);

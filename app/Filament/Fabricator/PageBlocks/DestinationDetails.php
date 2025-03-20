@@ -22,7 +22,6 @@ class DestinationDetails extends PageBlock
                             ->schema([
                                 FileUpload::make('image')
                                     ->image()
-                                    ->optimize('webp')
                                     ->directory('featured-images')
                                     ->required()
                                     ->disk('public')

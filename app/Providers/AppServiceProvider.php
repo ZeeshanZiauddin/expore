@@ -3,10 +3,13 @@
 namespace App\Providers;
 
 use Filament\Forms\Components\Checkbox;
+use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Toggle;
 use Illuminate\Support\ServiceProvider;
+use Str;
 use Z3d0X\FilamentFabricator\Facades\FilamentFabricator;
 
 class AppServiceProvider extends ServiceProvider
@@ -25,9 +28,16 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         FilamentFabricator::registerSchemaSlot('sidebar.after', [
-            Section::make('other_details')
-                ->label('Other Details')
+            Section::make('Other Details')
                 ->schema([
+                    FileUpload::make('featured_image')
+                        ->image()
+                        ->disk('public')
+                        ->directory(fn($get) => 'pages/' . Str::slug(strtolower($get('title'))) . '/featured-images')
+                        ->imageResizeMode('cover')
+                        ->imageCropAspectRatio('16:10')
+                        ->imageResizeTargetWidth('512')
+                        ->imageResizeTargetHeight('320')->required(),
                     Select::make('destination_id')
                         ->label('Destination')
                         ->relationship('destination', 'city')
@@ -38,9 +48,10 @@ class AppServiceProvider extends ServiceProvider
                             TextInput::make('country')->required(),
                             TextInput::make('continent')->required(),
                         ]),
-                    Checkbox::make('index')
+                    Toggle::make('index')
                         ->label('Index Page')
                         ->default(false),
+
                 ])
         ]);
     }

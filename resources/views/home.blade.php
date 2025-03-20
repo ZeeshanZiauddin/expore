@@ -42,88 +42,29 @@
             </div><!--end container-->
         </section><!--end section--> --}}
         <!-- Hero End -->
+
+        @if (count($featuredPages)>0)
         <section class="relative md:py-24 py-16 overflow-hidden">
             <div class="container relative">
                 <div class="grid grid-cols-1 pb-8 text-center">
                     <h3 class="mb-6 md:text-3xl text-2xl md:leading-normal leading-normal font-semibold">Top Destinations</h3>
-
                     <p class="text-slate-400 max-w-xl mx-auto">Planning for a trip? We will organize your trip with the best places and within best budget!</p>
                 </div><!--end grid-->
 
-                <div class="grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 relative mt-6 gap-6">
-                    <div class="group relative overflow-hidden rounded-md shadow dark:shadow-gray-800">
-                        <img src="assets/images/destinations/rome.jpg" class="scale-125 group-hover:scale-100 duration-500" alt="">
-                        <div class="absolute inset-0 bg-gradient-to-b to-slate-900 from-transparent opacity-0 group-hover:opacity-100 duration-500"></div>
-                        <div class="absolute p-4 bottom-0 start-0">
-                            <a href="" class="text-lg font-medium text-white hover:text-red-500 duration-500 ease-in-out">Rome, Italy</a>
-                            <p class="text-white/70 group-hover:text-white text-sm duration-500">3 Hotels</p>
+                <div class="grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 relative mt-6 gap-6"> 
+                    @foreach ($featuredPages as $page)
+                        <div class="group relative overflow-hidden rounded-md shadow dark:shadow-gray-800" data-destination-id="destination-id-{{$page['destination']['id']}}" data-destination-title="destination-id-{{$page['title']}}">
+                            <img src="{{asset('storage/'.$page['featured_image'])}}" class="scale-125 group-hover:scale-100 duration-500" alt="">
+                            <div class="absolute inset-0 bg-gradient-to-b to-slate-900 from-transparent opacity-0 group-hover:opacity-100 duration-500"></div>
+                            <div class="absolute p-4 bottom-0 start-0">
+                                <a href="{{url($page['slug'])}}" class="text-lg font-medium text-white hover:text-red-500 duration-500 ease-in-out">{{$page['destination']['city']}}, {{$page['destination']['country']}}</a>
+                                <p class="text-white/70 group-hover:text-white text-sm duration-500">3 Hotels</p>
+                            </div>
                         </div>
-                    </div><!--end content-->
-                    
-                    <div class="group relative overflow-hidden rounded-md shadow dark:shadow-gray-800">
-                        <img src="assets/images/destinations/singapore.webp" class="scale-125 group-hover:scale-100 duration-500" alt="">
-                        <div class="absolute inset-0 bg-gradient-to-b to-slate-900 from-transparent opacity-0 group-hover:opacity-100 duration-500"></div>
-                        <div class="absolute p-4 bottom-0 start-0">
-                            <a href="" class="text-lg font-medium text-white hover:text-red-500 duration-500 ease-in-out">Singapore</a>
-                            <p class="text-white/70 group-hover:text-white text-sm duration-500">3 Hotels</p>
-                        </div>
-                    </div><!--end content-->
-                    
-                    <div class="group relative overflow-hidden rounded-md shadow dark:shadow-gray-800">
-                        <img src="assets/images/destinations/paris.jpg" class="scale-125 group-hover:scale-100 duration-500" alt="">
-                        <div class="absolute inset-0 bg-gradient-to-b to-slate-900 from-transparent opacity-0 group-hover:opacity-100 duration-500"></div>
-                        <div class="absolute p-4 bottom-0 start-0">
-                            <a href="" class="text-lg font-medium text-white hover:text-red-500 duration-500 ease-in-out">Paris, France</a>
-                            <p class="text-white/70 group-hover:text-white text-sm duration-500">3 Hotels</p>
-                        </div>
-                    </div><!--end content-->
-                    
-                    <div class="group relative overflow-hidden rounded-md shadow dark:shadow-gray-800">
-                        <img src="assets/images/destinations/goa.jpeg" class="scale-125 group-hover:scale-100 duration-500" alt="">
-                        <div class="absolute inset-0 bg-gradient-to-b to-slate-900 from-transparent opacity-0 group-hover:opacity-100 duration-500"></div>
-                        <div class="absolute p-4 bottom-0 start-0">
-                            <a href="" class="text-lg font-medium text-white hover:text-red-500 duration-500 ease-in-out">Goa, India</a>
-                            <p class="text-white/70 group-hover:text-white text-sm duration-500">3 Hotels</p>
-                        </div>
-                    </div><!--end content-->
-                    
-                    <div class="group relative overflow-hidden rounded-md shadow dark:shadow-gray-800">
-                        <img src="assets/images/destinations/canada.jpg" class="scale-125 group-hover:scale-100 duration-500" alt="">
-                        <div class="absolute inset-0 bg-gradient-to-b to-slate-900 from-transparent opacity-0 group-hover:opacity-100 duration-500"></div>
-                        <div class="absolute p-4 bottom-0 start-0">
-                            <a href="" class="text-lg font-medium text-white hover:text-red-500 duration-500 ease-in-out">Whistler, Canada</a>
-                            <p class="text-white/70 group-hover:text-white text-sm duration-500">3 Hotels</p>
-                        </div>
-                    </div><!--end content-->
-                    
-                    <div class="group relative overflow-hidden rounded-md shadow dark:shadow-gray-800">
-                        <img src="assets/images/destinations/kuala.jpg" class="scale-125 group-hover:scale-100 duration-500" alt="">
-                        <div class="absolute inset-0 bg-gradient-to-b to-slate-900 from-transparent opacity-0 group-hover:opacity-100 duration-500"></div>
-                        <div class="absolute p-4 bottom-0 start-0">
-                            <a href="" class="text-lg font-medium text-white hover:text-red-500 duration-500 ease-in-out">Kuala Lumpur, Malaysia</a>
-                            <p class="text-white/70 group-hover:text-white text-sm duration-500">3 Hotels</p>
-                        </div>
-                    </div><!--end content-->
-                    
-                    <div class="group relative overflow-hidden rounded-md shadow dark:shadow-gray-800">
-                        <img src="assets/images/destinations/sydney.jpg" class="scale-125 group-hover:scale-100 duration-500" alt="">
-                        <div class="absolute inset-0 bg-gradient-to-b to-slate-900 from-transparent opacity-0 group-hover:opacity-100 duration-500"></div>
-                        <div class="absolute p-4 bottom-0 start-0">
-                            <a href="" class="text-lg font-medium text-white hover:text-red-500 duration-500 ease-in-out">Sydney, Australia</a>
-                            <p class="text-white/70 group-hover:text-white text-sm duration-500">3 Hotels</p>
-                        </div>
-                    </div><!--end content-->
-                    
-                    <div class="group relative overflow-hidden rounded-md shadow dark:shadow-gray-800">
-                        <img src="assets/images/destinations/verginia.webp" class="scale-125 group-hover:scale-100 duration-500" alt="">
-                        <div class="absolute inset-0 bg-gradient-to-b to-slate-900 from-transparent opacity-0 group-hover:opacity-100 duration-500"></div>
-                        <div class="absolute p-4 bottom-0 start-0">
-                            <a href="" class="text-lg font-medium text-white hover:text-red-500 duration-500 ease-in-out">Virginia Beach</a>
-                            <p class="text-white/70 group-hover:text-white text-sm duration-500">3 Hotels</p>
-                        </div>
-                    </div><!--end content-->
+                    @endforeach
                 </div><!--end grid-->
             </div><!--end container-->
+            @endif
 
             <div class="container relative md:mt-24 mt-16">
                 <div class="grid md:grid-cols-12 grid-cols-1 items-center gap-6 relative">

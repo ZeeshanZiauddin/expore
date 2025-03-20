@@ -11,6 +11,7 @@ use Filament\Tables;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Spatie\Permission\Models\Role;
+use STS\FilamentImpersonate\Tables\Actions\Impersonate;
 
 class UserResource extends Resource
 {
@@ -61,7 +62,7 @@ class UserResource extends Resource
                     ->searchable(),
 
                 Tables\Columns\BadgeColumn::make('roles.name')
-                    ->label('Roles'),
+                    ->label('Roles')->sortable(),
 
                 Tables\Columns\TextColumn::make('created_at')
                     ->label('Created')
@@ -77,6 +78,7 @@ class UserResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Impersonate::make(),
             ])
             ->bulkActions([
                 Tables\Actions\DeleteBulkAction::make(),

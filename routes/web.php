@@ -1,11 +1,12 @@
 <?php
 
+use App\Http\Controllers\PagesController;
 use Firefly\FilamentBlog\Models\Post;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('home');
-})->name('home');
+// HOME PAGE URL
+Route::get('/', [PagesController::class, 'index'])->name('home');
+
 
 Route::get('/about-us', function () {
 
@@ -23,3 +24,8 @@ Route::get('/about-us', function () {
 Route::get('/contact-us', function () {
     return view('contact');
 })->name('contact');
+
+
+Route::get('/thank-you', function () {
+    return view('thankyou');
+})->name('thanks');

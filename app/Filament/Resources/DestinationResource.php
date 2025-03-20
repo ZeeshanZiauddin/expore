@@ -3,18 +3,16 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\DestinationResource\Pages;
-use App\Filament\Resources\DestinationResource\RelationManagers;
 use App\Models\Destination;
 use Filament\Forms;
+use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Form;
-use Filament\Notifications\Actions\Action;
 use Filament\Notifications\Notification;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Str;
+use Intervention\Image\Facades\Image;
 use Z3d0X\FilamentFabricator\Models\Page;
 
 class DestinationResource extends Resource
@@ -43,6 +41,40 @@ class DestinationResource extends Resource
                     ->relationship('user', 'name') // Assuming users have a "name" column
                     ->searchable()
                     ->required(),
+                FileUpload::make('featured_image')
+                    ->image()
+                    ->disk('public') // Store in 'storage/app/public'
+                    ->directory('destinations/featured-images')
+                    ->imageResizeMode('cover')
+                    ->imageCropAspectRatio('16:9')
+                    ->imageResizeTargetWidth('1280')
+                    ->imageResizeTargetHeight('800')
+                    ->afterStateUpdated(function ($state, $set) {
+                        if ($state) {
+                            $compressedImagePath = 'destinations/featured-images/compressed/' . basename($state);
+
+                            // Compress the image
+                            Image::make(storage_path("app/public/{$state}"))
+                                ->resize(640, 400, function ($constraint) {
+                                $constraint->aspectRatio();
+                                $constraint->upsize();
+                            })
+                                ->save(storage_path("app/public/{$compressedImagePath}"), 80); // Adjust quality if needed
+            
+                            // Set the compressed image field
+                            $set('compressed_featured_image', $compressedImagePath);
+                        }
+                    }),
+
+                FileUpload::make('compressed_featured_image')
+                    ->image()
+                    ->disk('public')
+                    ->directory('destinations/featured-images/compressed')
+                    ->imageResizeMode('cover')
+                    ->imageCropAspectRatio('16:9')
+                    ->imageResizeTargetWidth('640')
+                    ->imageResizeTargetHeight('400'),
+
             ]);
     }
 
@@ -188,6 +220,7 @@ class DestinationResource extends Resource
             'index' => 0,
         ]);
     }
+
 
     public static function getPages(): array
     {
