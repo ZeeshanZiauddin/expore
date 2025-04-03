@@ -11,6 +11,8 @@ class EmailTemplate extends Model
     protected $fillable = ['name', 'blade_path', 'html_content', 'fields'];
 
     protected $casts = [
-        'fields' => 'array', // Store fields as JSON
+        'fields' => 'array',
+        'html_content' => 'array',
+
     ];
 }

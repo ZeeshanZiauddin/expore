@@ -29,27 +29,22 @@ class AirlineResource extends Resource
         return $form
             ->schema([
 
-                Grid::make()
-                    ->columns(3)
-                    ->schema([
-                        TextInput::make('name')
-                            ->label('Airline Name')
-                            ->required()
-                            ->maxLength(255),
+                TextInput::make('name')
+                    ->label('Airline Name')
+                    ->required()
+                    ->maxLength(255),
 
-                        TextInput::make('code')
-                            ->label('Airline Code')
-                            ->mask('999')
-                            ->unique(ignoreRecord: true)
-                            ->maxLength(3)
-                            ->required(),
+                TextInput::make('code')
+                    ->label('Airline Code')
+                    ->mask('999')
+                    ->unique(ignoreRecord: true)
+                    ->maxLength(3)
+                    ->required(),
 
-                        TextInput::make('iata')
-                            ->label('IATA Code')
-                            ->maxLength(10)
-                            ->nullable(),
-
-                    ]),
+                TextInput::make('iata')
+                    ->label('IATA Code')
+                    ->maxLength(10)
+                    ->nullable(),
 
 
                 Select::make('status')
@@ -77,7 +72,7 @@ class AirlineResource extends Resource
                     ->imageResizeTargetWidth('200')
                     ->imageResizeTargetHeight('200')
                     ->required(),
-            ])->columns(2);
+            ])->columns(3);
     }
 
     public static function table(Table $table): Table

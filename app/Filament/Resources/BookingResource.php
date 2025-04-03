@@ -177,7 +177,7 @@ class BookingResource extends Resource
                 TextColumn::make('supplier.name')->label('Supplier')->sortable(),
                 TextColumn::make('payment_method')->sortable(),
                 TextColumn::make('payment_amount')->sortable()->money('USD'),
-                TextColumn::make('customer_name')->sortable(),
+                TextColumn::make('customer_name')->sortable()->columnSpanFull(),
                 TextColumn::make('departureAirport.city')
                     ->label('Departure Airport')
                     ->formatStateUsing(fn($record) => "{$record->departureAirport->city} ({$record->departureAirport->code})")

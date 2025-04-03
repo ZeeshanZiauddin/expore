@@ -67,4 +67,13 @@ class User extends Authenticatable
     {
         return $this->hasMany(Query::class, 'awailed_by');
     }
+
+    public function company()
+    {
+        return $this->belongsTo(Company::class);
+    }
+    public function companyEmail()
+    {
+        return $this->hasMany(CompanyEmail::class);
+    }
 }

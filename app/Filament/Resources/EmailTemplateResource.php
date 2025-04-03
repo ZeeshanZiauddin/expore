@@ -18,6 +18,8 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Str;
+use InfinityXTech\FilamentUnlayer\Forms\Components\SelectTemplate;
+use InfinityXTech\FilamentUnlayer\Forms\Components\Unlayer;
 
 class EmailTemplateResource extends Resource
 {
@@ -39,10 +41,11 @@ class EmailTemplateResource extends Resource
                     ->label('Blade File Path')
                     ->helperText('Generated automatically'),
 
-                Textarea::make('html_content')
-                    ->required()
-                    ->label('HTML Content')
-                    ->helperText('Paste your email HTML here'),
+                // Textarea::make('html_content')
+                //     ->required()
+                //     ->label('HTML Content')
+                //     ->helperText('Paste your email HTML here'),
+                Unlayer::make('html_content')->required(),
 
                 Repeater::make('fields')
                     ->schema([
@@ -64,18 +67,18 @@ class EmailTemplateResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+
                 Tables\Actions\Action::make('preview')
-                    ->label('Preview Template')
+                    ->label('Preview')
+                    ->icon('heroicon-o-eye')
                     ->modalHeading('Template Preview')
-                    ->modalContent(
-                        function ($record) {
-                            return View::make('components.emailPreview', ['html' => $record->html_content]);
-                        }
-                    )
-                    ->modalWidth('3xl')
-                ,
+                    ->modalContent(fn(EmailTemplate $record) => view('components.emailPreview', ['html' => $record->html_content['html']]))
+                    ->slideOver()
+                    ->modalWidth('5xl'),
+                Tables\Actions\ActionGroup::make([
+                    Tables\Actions\EditAction::make(),
+                    Tables\Actions\DeleteAction::make(),
+                ]),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

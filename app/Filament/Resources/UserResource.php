@@ -37,8 +37,7 @@ class UserResource extends Resource
                 Forms\Components\TextInput::make('password')
                     ->password()
                     ->revealable()
-                    ->maxLength(255)
-                    ->visibleOn('create'),
+                    ->maxLength(255),
 
                 Forms\Components\Select::make('role')
                     ->label('Role')

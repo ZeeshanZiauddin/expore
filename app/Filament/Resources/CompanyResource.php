@@ -29,11 +29,27 @@ class CompanyResource extends Resource
         return $form
             ->schema([
                 TextInput::make('name')->required()->unique(),
-                FileUpload::make('logo')->image(),
-                FileUpload::make('favicon')->image(),
+
                 TextInput::make('api_key')
                     ->default(fn() => str()->random(32))
                     ->readOnly(),
+
+                FileUpload::make('logo')->image()
+                    ->disk('public')
+                    ->directory('company/logo')
+                    ->imageResizeMode('cover')
+                    ->imageCropAspectRatio('16:9')
+                    ->imageResizeTargetWidth('1920')
+                    ->imageResizeTargetHeight('1080'),
+                FileUpload::make('favicon')->image()
+                    ->disk('public')
+                    ->directory('company/favicon')
+                    ->imageResizeMode('cover')
+                    ->imageCropAspectRatio('1:1')
+                    ->imageResizeTargetWidth('100')
+                    ->imageResizeTargetHeight('100'),
+
+
                 Select::make('status')
                     ->options([
                         'active' => 'Active',

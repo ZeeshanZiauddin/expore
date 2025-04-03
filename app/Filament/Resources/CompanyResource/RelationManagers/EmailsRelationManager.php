@@ -24,19 +24,39 @@ class EmailsRelationManager extends RelationManager
                 TextInput::make('name')
                     ->label('Name')
                     ->required(),
+
+                Select::make('user_id')
+                    ->label('Select User')
+                    ->relationship('user', 'name')
+                    ->required()
+                    ->preload()
+                    ->searchable(),
                 TextInput::make('email')
                     ->label('Email Address')
                     ->email()
                     ->required()
-                    ->unique('company_emails', 'email'),
+                    ->unique('company_emails', 'email')->afterStateUpdated(function ($state, callable $set) {
+                        $set('mail_username', $state);
+                    })->debounce(1000),
 
-                TextInput::make('mail_host')
+                Select::make('mail_host')
+                    ->options([
+                        'smtp.hostinger.com' => 'Hostinger',
+                        'smtp.mailgun.com' => 'Mailgun',
+                        'smtpout.secureserver.net' => 'Godaddy',
+
+                    ])
                     ->label('SMTP Host')
                     ->required(),
 
-                TextInput::make('mail_port')
-                    ->label('SMTP Port')
-                    ->numeric()
+                Select::make('mail_port')
+                    ->options(
+                        [
+                            '587' => '587',
+                            '465' => '465',
+                            '25' => '25',
+                        ]
+                    )->label('SMTP Port')
                     ->required(),
 
                 TextInput::make('mail_username')
@@ -53,11 +73,9 @@ class EmailsRelationManager extends RelationManager
                     ->options([
                         'tls' => 'TLS',
                         'ssl' => 'SSL',
-                        'none' => 'None',
                     ])
-                    ->default('tls')
+                    ->default('ssl')
                     ->required(),
-
                 TextInput::make('mail_from_name')
                     ->label('From Name')
                     ->required(),
